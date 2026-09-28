@@ -252,7 +252,43 @@
   @keyframes hudPulse{ 0%,100%{ opacity:.16; } 50%{ opacity:.5; } }
 
   /* ---------- hero depth layers ---------- */
-  .hero-inner{ transform-style:preserve-3d; perspective:1000px; transition:transform .35s ease-out; }
+  .hero-inner{
+    transform-style:preserve-3d; perspective:1000px; transition:transform .35s ease-out;
+    display:grid; grid-template-columns:1.32fr .68fr; gap:clamp(26px,4vw,58px); align-items:center;
+  }
+  .hero-copy{ transform-style:preserve-3d; }
+  .portrait{ margin:0; position:relative; transform-style:preserve-3d; transform:translateZ(14px); }
+  .portrait-frame{
+    position:relative; width:100%; max-width:318px; margin-left:auto;
+    transform:perspective(900px) rotateY(-8deg) rotateX(3deg);
+    transform-style:preserve-3d;
+    transition:transform .55s cubic-bezier(.2,.8,.2,1), box-shadow .55s ease;
+    box-shadow:0 44px 74px -44px rgba(0,0,0,.95), 0 0 48px -28px var(--accent);
+  }
+  .portrait:hover .portrait-frame{ transform:perspective(900px) rotateY(0deg) rotateX(0deg) translateZ(12px); }
+  .portrait-frame img{
+    width:100%; height:auto; display:block; border:1px solid var(--line);
+    filter:grayscale(.3) contrast(1.06) brightness(1.02); transition:filter .5s ease;
+  }
+  .portrait:hover .portrait-frame img{ filter:grayscale(0) contrast(1.08) brightness(1.05); }
+  .portrait-frame::before, .portrait-frame::after, .portrait-frame .c2, .portrait-frame .c3{
+    position:absolute; width:20px; height:20px; border-color:var(--accent); border-style:solid; content:""; z-index:2;
+    transition:border-color .4s ease;
+  }
+  .portrait-frame::before{ top:-5px; left:-5px; border-width:2px 0 0 2px; }
+  .portrait-frame::after{ bottom:-5px; right:-5px; border-width:0 2px 2px 0; }
+  .portrait-frame .c2{ top:-5px; right:-5px; border-width:2px 2px 0 0; }
+  .portrait-frame .c3{ bottom:-5px; left:-5px; border-width:0 0 2px 2px; }
+  .portrait-cap{
+    margin-top:18px; font-family:var(--font-mono); font-size:.64rem; letter-spacing:.16em;
+    color:var(--text-faint); text-align:right; transform:translateZ(6px);
+  }
+  @media (max-width:900px){
+    .hero-inner{ grid-template-columns:1fr; }
+    .portrait{ order:-1; max-width:290px; transform:translateZ(0); }
+    .portrait-frame{ margin:0 auto; }
+    .portrait-cap{ text-align:center; }
+  }
   .eyebrow{ transform:translateZ(12px); }
   h1.name{
     transform:translateZ(26px);
@@ -432,6 +468,7 @@
   <section id="hero">
     <canvas id="hero-canvas"></canvas>
     <div class="hero-inner">
+      <div class="hero-copy">
       <div class="eyebrow" id="heroEyebrow">PERFIL PROFESIONAL DUAL</div>
       <h1 class="name">Oscar Iván<br>Solarte Cerón</h1>
       <div class="role-wrap"><div class="role" id="heroRole">Analista de Datos &amp; Automation Analyst</div></div>
@@ -441,6 +478,14 @@
         <span id="heroContactMeta"><b>&#9993;</b> arisergte@gmail.com</span>
         <span><b>TEL</b> +57 315 401 3707</span>
       </div>
+      </div>
+      <figure class="portrait">
+        <div class="portrait-frame">
+          <img src="oscar.jpg" width="640" height="853" alt="Retrato de Oscar Iván Solarte Cerón" decoding="async">
+          <span class="c2"></span><span class="c3"></span>
+        </div>
+        <figcaption class="portrait-cap">O.I.S.C. // BOGOTÁ, CO</figcaption>
+      </figure>
     </div>
     <div class="scrolldown"><div class="bar"></div><span id="scrollLbl">DESPLÁZATE</span></div>
   </section>
